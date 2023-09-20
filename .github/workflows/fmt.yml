@@ -1,0 +1,39 @@
+permissions:
+  contents: write
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - '**/*.cls'
+      - '**/*.tex'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+name: Fmt
+jobs:
+  fmt:
+    runs-on: ubuntu-latest
+    name: format thesis and bib
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Install latexindent
+        run: |
+          sudo wget https://github.com/cmhughes/latexindent.pl/releases/download/V3.22.2/latexindent-linux -O /usr/bin/latexindent
+          sudo chmod +x /usr/bin/latexindent
+      - name: Install bibtex-tidy
+        run: npm install -g bibtex-tidy
+      - name: Run fomatter
+        run: |
+           latexindent -w *.tex
+           latexindent -w *.cls
+           bibtex-tidy ref.bib
+      - uses: EndBug/add-and-commit@v9
+        with:
+          add: |
+            '*.tex'
+            '*.cls'
+            '*.bib'
+          default_author: github_actions
+          message: 'Autofmt by latexindent/bibtex-tidy'
