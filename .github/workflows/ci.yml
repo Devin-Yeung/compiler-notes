@@ -1,0 +1,36 @@
+permissions:
+  contents: read
+on:
+  push:
+    branches: [master]
+  pull_request:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+name: CI
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: build the document
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: compiler-notes.tex
+          # extra_fonts: fonts/*
+          # latexmk_use_xelatex: true
+          pre_compile: |
+            apk add msttcorefonts-installer fontconfig
+            update-ms-fonts
+            fc-cache -f
+  typos:
+    name: Spell Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: crate-ci/typos@master
+        with:
+          files: .
