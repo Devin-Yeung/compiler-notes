@@ -34,3 +34,4 @@ jobs:
       - uses: crate-ci/typos@master
         with:
           files: .
+          config: ./.typo.toml
