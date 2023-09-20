@@ -4,8 +4,8 @@ on:
   push:
     branches: [ master ]
     paths:
-      - '**/*.cls'
       - '**/*.tex'
+      - '**/*.bib'
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
@@ -27,13 +27,11 @@ jobs:
       - name: Run fomatter
         run: |
            latexindent -w *.tex
-           latexindent -w *.cls
            bibtex-tidy ref.bib
       - uses: EndBug/add-and-commit@v9
         with:
           add: |
             '*.tex'
-            '*.cls'
             '*.bib'
           default_author: github_actions
           message: 'Autofmt by latexindent/bibtex-tidy'
