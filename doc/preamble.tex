@@ -1,0 +1,111 @@
+\usepackage[table]{xcolor}
+\usepackage{adjustbox}
+\usepackage{setspace} % Related Command: \setstretch
+\setstretch{1.5}
+
+% Better enumeration
+\usepackage{enumerate}
+
+% Algorithm support
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\SetKwInput{KwInput}{Input} % Set the Input
+\SetKwInput{KwOutput}{Output} % set the Output
+
+% Indention
+\usepackage{indentfirst}
+
+% Better subcaption
+\usepackage{subcaption}
+
+% More math symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newtheorem{definition}{Definition}
+\usepackage{mathtools}
+\allowdisplaybreaks % page breaks in equation is allowed
+
+% Support Tables
+\usepackage{booktabs} % Related Command: \toprule \midrule \bottomrule
+\usepackage{hyperref}
+\usepackage{fancyvrb}
+
+% Better \ref command
+\usepackage{cleveref}
+\crefname{lstlisting}{listing}{listings}
+\Crefname{lstlisting}{Listing}{Listings}
+
+\usepackage{listings}
+% usage example:
+% define some basic colors
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstdefinestyle{ANSI-C} {
+	basicstyle=\ttfamily,                        % very small code
+	breaklines=true,                             % break long lines
+	commentstyle=\itshape\color{green!50!black}, % comments are green
+	keywordstyle=[1]\color{blue!80!black},       % instructions are blue
+	keywordstyle=[2]\color{orange!80!black},     % sections/other directives are orange
+	keywordstyle=[3]\color{red!50!black},        % registers are red
+	stringstyle=\color{mauve},                   % strings are from the telekom
+  % identifierstyle=\color{teal},              % user declared addresses are teal
+	frame=shadowbox,                             % black line on the left side of code
+	linewidth=\textwidth,                        % centering the box
+	xleftmargin=0.1\textwidth,                   % centering the box
+	xrightmargin=0.1\textwidth,                  % centering the box
+	language=[ansi]C,                            % all code is ansi-c
+	tabsize=4,                                   % indent tabs with 4 spaces
+	showstringspaces=false,                      % do not replace spaces with weird underlines
+	keepspaces=true,                             % keep the comment alignment
+	columns=fullflexible
+}
+
+
+% Pre-defined env
+\lstnewenvironment{ANSI-C}
+{\lstset{style=ANSI-C}}
+{}
+\newcommand{\ic}[1]{\colorbox[rgb]{0.95, 0.95, 0.95}{\lstinline[style=ANSI-C]$#1$}}
+% Set Margins
+\setlength{\topmargin}{-0.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+
+% Better table
+\usepackage{array}
+
+% User-Defined Command
+% \TODO command
+\newcommand\TODO{{\bfseries \color{red} \itshape \underline{Todo}}}
+
+
+% Credit to: https://github.com/SeniorMars/dotfiles/blob/master/latex_template
+\usepackage{tikz}
+\usepackage[most,many,breakable]{tcolorbox}
+
+%================================
+% PROPOSITION
+%================================
+\definecolor{propbg}{HTML}{f2fbfc}
+\definecolor{propfr}{HTML}{191971}
+\tcbuselibrary{theorems,skins,hooks}
+\newtcbtheorem[number within=section]{Prop}{Proposition}
+{%
+	enhanced,
+	breakable,
+	colback = propbg,
+	frame hidden,
+	boxrule = 0sp,
+	borderline west = {2pt}{0pt}{propfr},
+	sharp corners,
+	detach title,
+	before upper = \tcbtitle\par\smallskip,
+	coltitle = propfr,
+	fonttitle = \bfseries\sffamily,
+	description font = \mdseries,
+	separator sign none,
+	segmentation style={solid, propfr},
+}
+{th}
+

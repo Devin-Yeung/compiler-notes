@@ -1,0 +1,8 @@
+/build
+.DS_Store
+/img
+**/.idea
+**/venv
+__pycache__
+.benchmarks
+.pytest_cache

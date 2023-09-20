@@ -1,0 +1,81 @@
+{
+  // LaTeX Linter (Disable them if needed)
+  "latex-workshop.linting.chktex.enabled": false,
+  "latex-workshop.message.latexlog.exclude": ["*"],
+  "latex-workshop.message.bibtexlog.exclude": ["*"],
+  // Code blocks
+  "latex-workshop.latex.verbatimEnvs": ["verbatim", "lstlisting", "minted"],
+  // Forward synctex at cursor after compiling
+  "latex-workshop.synctex.afterBuild.enabled": true,
+  // Output directory
+  "latex-workshop.latex.outDir": "%DIR%/build",
+  // Auto build on save
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  // Never autoclean
+  "latex-workshop.latex.autoClean.run": "never",
+  // Default recipe
+  "latex-workshop.latex.recipe.default": "lastUsed",
+  // Ignore magic comment
+  "latex-workshop.latex.build.forceRecipeUsage": true,
+  // Reverse search keybind
+  "latex-workshop.view.pdf.internal.synctex.keybinding": "ctrl-click",
+  // Ignoring the badbox warning
+  "latex-workshop.message.badbox.show": false,
+  // LaTeX ToolChains
+  "latex-workshop.latex.tools": [
+    {
+      "name": "pdflatex",
+      "command": "pdflatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-output-directory=%OUTDIR%",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "bibtex",
+      "command": "bibtex",
+      "args": ["%OUTDIR%/%DOCFILE%"],
+      "env": {}
+    }
+  ],
+  // Build recipes
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "pdflatex ➞ bibtex ➞ pdflatex ➞ pdflatex ",
+      "tools": ["pdflatex", "bibtex", "pdflatex", "pdflatex"]
+    },
+    {
+      "name": "pdflatex-lite",
+      "tools": ["pdflatex"]
+    }
+  ],
+  // Enable all the mathjax extensions
+  "latex-workshop.hover.preview.mathjax.extensions": [
+    "amscd",
+    "bbox",
+    "boldsymbol",
+    "braket",
+    "bussproofs",
+    "cancel",
+    "cases",
+    "centernot",
+    "colortbl",
+    "empheq",
+    "enclose",
+    "extpfeil",
+    "gensymb",
+    "html",
+    "mathtools",
+    "mhchem",
+    "physics",
+    "textcomp",
+    "textmacros",
+    "unicode",
+    "upgreek",
+    "verb"
+  ]
+}
