@@ -1,0 +1,48 @@
+permissions:
+  contents: write
+on:
+  push:
+    branches: [master]
+  pull_request:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+name: Deploy
+jobs:
+  build-convert-deploy:
+    runs-on: ubuntu-latest
+    name: deploy to gh-pages
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: compiler-notes.tex
+          # extra_fonts: fonts/*
+          # latexmk_use_xelatex: true
+          pre_compile: |
+            apk add msttcorefonts-installer fontconfig
+            update-ms-fonts
+            fc-cache -f
+      - name: Install pdf2htmlEX
+        run: |
+          wget "https://github.com/pdf2htmlEX/pdf2htmlEX/releases/download/v0.18.8.rc1/pdf2htmlEX-0.18.8.rc1-master-20200630-Ubuntu-focal-x86_64.deb" -O pdf2htmlEX.deb
+          sudo apt install ./pdf2htmlEX.deb
+          sudo apt install -y ttfautohint
+      - name: Convert pdf to html
+        run: |
+          mkdir build
+          pdf2htmlEX  --external-hint-tool=ttfautohint \
+                      --font-size-multiplier 1 \
+                      --zoom 25 \
+                      compiler-notes.pdf build/index.html
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/master'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          publish_dir: ./build
