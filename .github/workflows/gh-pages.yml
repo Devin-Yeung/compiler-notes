@@ -36,7 +36,7 @@ jobs:
           mkdir build
           pdf2htmlEX  --external-hint-tool=ttfautohint \
                       --font-size-multiplier 1 \
-                      --zoom 25 \
+                      --fit-width 1024 \
                       compiler-notes.pdf build/index.html
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
